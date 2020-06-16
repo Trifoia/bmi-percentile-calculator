@@ -1,0 +1,33 @@
+{
+  "name": "nodejs-template",
+  "version": "1.0.1",
+  "description": "Nodejs template used by Trifoia. Remember to replace this with project specific information!",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha --recursive --test",
+    "test-quick": "mocha --recursive --quick --test",
+    "test-debug": "node --inspect-brk node_modules/.bin/mocha --recursive --test",
+    "test-debug-quick": "node --inspect-brk node_modules/.bin/mocha --recursive --quick --test",
+    "start": "nodemon app.js",
+    "start-debug": "nodemon app.js --debug",
+    "lint": "eslint . --fix",
+    "lint-no-fix": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Trifoia/nodejs-template.git"
+  },
+  "keywords": [
+    "Template"
+  ],
+  "author": "Trifoia (https://trifoia.com/)",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/Trifoia/nodejs-template/issues"
+  },
+  "homepage": "https://github.com/Trifoia/nodejs-template#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "mocha": "^7.1.1"
+  }
+}
