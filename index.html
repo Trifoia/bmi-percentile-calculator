@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>BMI Calculator Test Page</title>
+  <meta name="description" content="BMI Calculator Test Page">
+  <meta name="author" content="Me">
+
+  <style>
+    body {
+      padding: 20px;
+      background: ivory;
+    }
+
+    #log {
+      padding: 10px;
+      background: lightyellow;
+    }
+  </style>
+
+  <script
+    src="dist/bmi-percentile-calculator.js">
+  </script>
+</head>
+
+<body>
+  <div id="log">
+  </div>
+  <script>
+    const log = document.getElementById('log');
+    const english1 = BmiPercentileCalculator.english(14, 24, 'f', 45);
+    log.innerText += 'BMI Percentile Calculator\n';
+    log.innerText += 'english(14, 24, \'f\', 45)\n';
+    log.innerText += 'Expected:\n';
+    log.innerText += '{\n'
+    log.innerText += '  "bmi": 17.1\n'
+    log.innerText += '  "percentile": 88\n'
+    log.innerText += '  "overP95": 0\n'
+    log.innerText += '  "M": 15.37335154\n'
+    log.innerText += '  "Z": 1.1695501694685717\n'
+    log.innerText += '}\n'
+    log.innerText += '\n'
+    log.innerText += 'Actual:\n';
+    log.innerText += JSON.stringify(english1, null, 2) + '\n';
+
+    log.innerText += '\n'
+    log.innerText += '\n'
+    log.innerText += '\n'
+
+    const agem1 = BmiPercentileCalculator.convertDateToAgem('2019-07-04', new Date(2020, 6, 4));
+    log.innerText += 'convertDateToAgem(\'2019-07-04\', new Date(2020, 6, 4))\n';
+    log.innerText += 'Expected:\n';
+    log.innerText += '12\n'
+    log.innerText += '\n'
+    log.innerText += 'Actual:\n';
+    log.innerText +=  agem1 + '\n';
+
+  </script>
+</body>
+</html>
