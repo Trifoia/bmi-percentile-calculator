@@ -46,20 +46,33 @@ npm run test
 
 Calculates the number of months ago the given date was compared to now
 
-@param {string} date The date in YYYY-MM-DD format
-@param {Date} [now] Date object to use as the current date
+`convertDateToAgem(date: string, current: Date): number`
+
+- date: The date in YYYY-MM-DD format
+- current: Date object to use as the current date (default Date.now())
+
 
 ### `BmiPercentileCalculator.metric`
 
 Takes various data points and generates information about that bmi and bmi percentile
 
-@param {number} kgs Weight in Kilograms
-@param {number} meters Height in meters
-@param {string} sex Biological sex. "f" for female and "m" for male
-@param {number} agem Age in months
-@param {object} optionalBMIData (optional) BMI data taken from the CDC calculator website
+```
+BmiPercentileCalculator.metric(
+	kgs: number,
+	meters: number,
+	sex: string,
+	agem: number,
+	optionalBMIData: object) : object`
+```
 
-@returns {object} Object with the following fields:
+- kgs: Weight in Kilograms
+- meters: Height in meters
+- sex: Biological sex. "f" for female and "m" for male
+- agem: Age in months
+- optionalBMIData: (optional) BMI data taken from the CDC calculator website
+
+Returns:
+Object with the following fields:
 - bmi: The calculated bmi
 - percentile: The calculated bmi percentile
 - overP95: The percentage over the 95th percentile. Present only if over the 97th percentile
@@ -71,13 +84,22 @@ Takes various data points and generates information about that bmi and bmi perce
 
 Takes various data points and generates information about that bmi and bmi percentile using imperial (english) units
 
-@param {number} lbs Weight in pounds
-@param {number} inches Height in inches
-@param {string} sex Biological sex. "f" for female and "m" for male
-@param {number} agem Age in months
-@param {object} optionalBMIData (optional) BMI data taken from the CDC calculator website
+```
+BmiPercentileCalculator.metric(
+	lbs: number,
+	inches: number,
+	sex: string,
+	agem: number,
+	optionalBMIData: object) : object`
+```
 
-@returns {object} @see generateBmi
+- lbs: Weight in pounds
+- inches: Height in inches
+- sex: Biological sex. "f" for female and "m" for male
+- agem: Age in months
+- optionalBMIData: (optional) BMI data taken from the CDC calculator website
+
+Returns: See `metric()` above.
 
 ## Version History
 
