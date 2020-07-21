@@ -23,6 +23,7 @@ const convertDateToAgem = require('./convert-date-to-agem');
  */
 const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
   const bmiData = optionalBMIData || officialBmiData;
+  agem = Math.round(agem);
 
   sex = sex === 'm' ? '1' : '2';
 
