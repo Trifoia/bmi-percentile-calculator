@@ -1,8 +1,8 @@
 {
-  "name": "bmi-percentile-calculator",
-  "version": "0.0.1",
+  "name": "@trifoia/bmi-percentile-calculator",
+  "version": "1.0.1",
   "description": "BMI Percentile Calculator",
-  "main": "app.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "rm -rf dist/ && webpack",
     "serve": "npm run build && http-server -c-1 .",
@@ -18,7 +18,7 @@
     "Template"
   ],
   "author": "Trifoia (https://trifoia.com/)",
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Trifoia/bmi-percentile-calculator/issues"
   },

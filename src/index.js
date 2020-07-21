@@ -94,7 +94,6 @@ const generateBmiEnglish = (lbs, inches, sex, agem, optionalBMIData) => {
   return generateBmiMetric(lbs * 0.453592, inches * 0.0254, sex, agem, optionalBMIData);
 };
 
-
 module.exports = {
   english: generateBmiEnglish,
   metric: generateBmiMetric,
