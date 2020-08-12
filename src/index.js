@@ -63,7 +63,7 @@ const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
 
   // Percentile calc
   const percentileRaw = generateZPercent(bmiZ) * 100;
-  const percentile = Math.round(percentileRaw);
+  const percentile = Number(percentileRaw.toFixed(1));
   calcBmiObj.percentile = percentile;
 
   if (percentileRaw > 97) {

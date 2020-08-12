@@ -31,7 +31,7 @@ describe('bmi-percentile-calculator', function() {
     };
     check(BmiPercentileCalculator.english(14, 24, 'f', 45, bmiData), {
       bmi: 17.1,
-      percentile: 88,
+      percentile: 87.9,
       overP95: 0,
       M: 15.37335154,
       Z: 1.1695501694685717
@@ -39,7 +39,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(20, 24, 'f', 90), {
       bmi: 24.4,
-      percentile: 99,
+      percentile: 98.9,
       overP95: 121,
       M: 15.6251988,
       Z: 2.3023581064456002
@@ -47,7 +47,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(40, 40, 'f', 180), {
       bmi: 17.6,
-      percentile: 17,
+      percentile: 17.1,
       overP95: 0,
       M: 19.9305662,
       Z: -0.9515010505319098
@@ -55,7 +55,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(36, 43, 'f', 90, bmiData), {
       bmi: 13.7,
-      percentile: 8,
+      percentile: 7.6,
       overP95: 0,
       M: 15.6251988,
       Z: -1.4356662429114826
@@ -63,7 +63,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(14, 24, 'm', 45, bmiData), {
       bmi: 17.1,
-      percentile: 87,
+      percentile: 86.6,
       overP95: 0,
       M: 15.70613566,
       Z: 1.1056912339515312
@@ -71,7 +71,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(20, 24, 'm', 90, bmiData), {
       bmi: 24.4,
-      percentile: 99,
+      percentile: 99.2,
       overP95: 125,
       M: 15.63170735,
       Z: 2.416604382916007
@@ -79,7 +79,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(20, 24, 'm', 90.2, bmiData), {
       bmi: 24.4,
-      percentile: 99,
+      percentile: 99.2,
       overP95: 125,
       M: 15.63170735,
       Z: 2.416604382916007
@@ -87,7 +87,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(40, 40, 'm', 180, bmiData), {
       bmi: 17.6,
-      percentile: 15,
+      percentile: 15.1,
       overP95: 0,
       M: 19.85766121,
       Z: -1.0314390524206944
@@ -95,7 +95,7 @@ describe('bmi-percentile-calculator', function() {
 
     check(BmiPercentileCalculator.english(36, 43, 'm', 90, bmiData), {
       bmi: 13.7,
-      percentile: 4,
+      percentile: 4.3,
       overP95: 0,
       M: 15.63170735,
       Z: -1.7119358672696052
