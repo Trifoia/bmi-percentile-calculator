@@ -7,6 +7,7 @@
     "build": "rm -rf dist/ && webpack",
     "serve": "npm run build && http-server -c-1 .",
     "test": "npm run build && mocha --recursive --test",
+    "test-debug": "node --inspect node_modules/.bin/mocha --recursive --test",
     "lint": "eslint src/",
     "lint-fix": "eslint src/ --fix"
   },
@@ -31,6 +32,6 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "moment": "^2.27.0"
+    "dayjs": "^1.8.33"
   }
 }

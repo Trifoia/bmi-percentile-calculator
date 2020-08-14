@@ -12,6 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bmi-percentile-calculator.js',
     auxiliaryComment: 'Test Comment',
-    globalObject: 'this',
-  }
+    globalObject: 'this'
+  },
+  mode: 'production'
 };

@@ -5,6 +5,81 @@ const generateZPercent = require('./generate-z-percent.js');
 const convertDateToAgem = require('./convert-date-to-agem');
 
 /**
+ * Converts pounds to kilograms
+ * 
+ * @param {number} lbs Pounds
+ */
+const lbsToKgs = (lbs) => {
+  return lbs * 0.453592;
+};
+
+/**
+ * Converts kilograms to pounds
+ *
+ * @param {number} kgs Kilograms
+ */
+const kgsToLbs = (kgs) => {
+  return kgs / 0.453592;
+};
+
+/**
+ * Converts inches to meters
+ *
+ * @param {number} inches Inches
+ */
+const inchesToMeters = (inches) => {
+  return inches * 0.0254;
+};
+
+/**
+ * Converts meters to inches
+ *
+ * @param {number} meters Meters
+ */
+const metersToInches = (meters) => {
+  return meters / 0.0254;
+};
+
+/**
+ * Calculate simple BMI
+ *
+ * @param {number} kgs Mass in kilograms
+ * @param {number} meters Height in meters
+ */
+const calculateBmi = (kgs, meters) => {
+  return kgs / ( meters * meters );
+};
+
+/**
+ * Calculates BMI using english units
+ *
+ * @param {number} lbs Pounds
+ * @param {number} inches Inches
+ */
+const calculateBmiEnglish = (lbs, inches) => {
+  return calculateBmi(lbsToKgs(lbs), inchesToMeters(inches));
+};
+
+/**
+ * Takes a BMI and height in meters and returns a weight in kilograms
+ *
+ * @param {number} bmi BMI
+ * @param {number} meters Meters
+ */
+const calculateWeight = (bmi, meters) => {
+  return bmi * meters * meters;
+};
+
+/**
+ * Takes a BMI and height in inches and returns a weight in pounds
+ * @param {number} bmi BMI
+ * @param {number} inches Inches
+ */
+const calculateWeightEnglish = (bmi, inches) => {
+  return kgsToLbs(calculateWeight(bmi, inchesToMeters(inches)));
+};
+
+/**
  * Original source: https://www.cdc.gov/healthyweight/bmi/bmi_calc.js
  * Takes various data points and generates information about that bmi and bmi percentile
  * 
@@ -37,7 +112,7 @@ const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
   };
 
   // bmi
-  const bmi =  kgs / ( meters * meters );
+  const bmi =  calculateBmi(kgs, meters);
   calcBmiObj.bmi = Math.round( bmi * 10 ) / 10;
 
   // Get the correct item from the bmi data
@@ -62,11 +137,12 @@ const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
   calcBmiObj.Z = bmiZ;
 
   // Percentile calc
-  const percentileRaw = generateZPercent(bmiZ) * 100;
-  const percentile = Number(percentileRaw.toFixed(1));
+  const percentileRaw = generateZPercent(bmiZ);
+  const percentile = Number((percentileRaw * 100).toFixed(1));
   calcBmiObj.percentile = percentile;
+  calcBmiObj.percentileRaw = percentileRaw;
 
-  if (percentileRaw > 97) {
+  if (percentileRaw > 0.97) {
     // Data from bmiData table
     const p95 = parseFloat(bmiDataItem.P95);
 
@@ -92,11 +168,88 @@ const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
  * @returns {object} @see generateBmi
  */
 const generateBmiEnglish = (lbs, inches, sex, agem, optionalBMIData) => {
-  return generateBmiMetric(lbs * 0.453592, inches * 0.0254, sex, agem, optionalBMIData);
+  return generateBmiMetric(lbsToKgs(lbs), inchesToMeters(inches), sex, agem, optionalBMIData);
+};
+
+/**
+ * Takes a percentile, along with other metrics, and returns a weight in kilograms that 
+ * corresponds to that percentile. Will return NaN if a percentile cannot be generated with
+ * the provided information
+ * 
+ * @param {number} percentile BMI Percentile value, should be between 0 and 1
+ * @param {number} meters Height in meters
+ * @param {number} sex Sex identifier. "m" or "f"
+ * @param {number} agem Age in months
+ * @param {object[]} optionalBMIData (optional) BMI data taken from the CDC calculator website
+ */
+const weightFromPercentile = (percentile, meters, sex, agem, optionalBMIData) => {
+  // TODO: Take a statistics course so that I can actually calculate this value properly
+  // instead of relying on this ridiculous brute force method
+
+  // Maximum amount the guessed percentile and actual percentile can be different before a
+  // value is returned
+  const maxMatchDifference = 0.00000001;
+  
+  // Start by getting a "reasonable" weight guess by naively assuming a linear relationship
+  // between BMI and bmi percentile, starting at 18.5 and ending at 30
+  const bmiGuess = (30 - 18.5) * percentile + 18.5;
+  let kgs = calculateWeight(bmiGuess, meters);
+  let foundPercent = generateBmiMetric(kgs, meters, sex, agem, optionalBMIData).percentileRaw;
+
+  if (typeof foundPercent === 'undefined') {
+    // We can't find the percentile for this person, probably because they are too old
+    return NaN;
+  }
+  
+  let lowBound = null;
+  let highBound = null;
+  while (Math.abs(foundPercent - percentile) > maxMatchDifference) {
+    if (foundPercent < percentile) {
+      // The found percentile was less than we need, increase the kgs and try again
+      if (!lowBound || lowBound < foundPercent) lowBound = kgs;
+      
+      // If we haven't found a high bound yet, double the kg value
+      if (!highBound) {
+        kgs *= 2;
+      } else {
+        // Otherwise, chose a value half way in between the current value and the high bound
+        kgs = (kgs + highBound) / 2;
+      }
+    } else {
+      // The found percentile was more than we need, decrease the kgs and try again
+      if (!highBound || highBound > foundPercent) highBound = kgs;
+
+      // If we haven't found a low bound yet, half the kg value
+      if (!lowBound) {
+        kgs *= 0.5;
+      } else {
+        // Otherwise, choose a value half way between the current value and the low bound
+        kgs = (lowBound + kgs) / 2;
+      }      
+    }
+
+    foundPercent = generateBmiMetric(kgs, meters, sex, agem, optionalBMIData).percentileRaw;
+  }
+
+  return kgs;
+};
+
+const weightFromPercentileEnglish = (percentile, inches, sex, agem, optionalBMIData) => {
+  return kgsToLbs(weightFromPercentile(percentile, inchesToMeters(inches), sex, agem, optionalBMIData));
 };
 
 module.exports = {
   english: generateBmiEnglish,
   metric: generateBmiMetric,
-  convertDateToAgem: convertDateToAgem
+  convertDateToAgem,
+  lbsToKgs,
+  kgsToLbs,
+  inchesToMeters,
+  metersToInches,
+  calculateBmi,
+  calculateBmiEnglish,
+  calculateWeight,
+  calculateWeightEnglish,
+  weightFromPercentile,
+  weightFromPercentileEnglish
 };
