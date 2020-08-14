@@ -1,6 +1,6 @@
 'use strict';
 
-const moment = require('moment');
+const dayjs = require('dayjs');
 
 /**
  * Calculates the number of months ago the given date was compared to
@@ -10,8 +10,8 @@ const moment = require('moment');
  * @param {Date} [now] Date object to use as the current date
  */
 const convertDateToAgem = (date, now = Date.now()) => {
-  const then = moment(date);
-  now = moment(now);
+  const then = dayjs(date);
+  now = dayjs(now);
 
   return now.diff(then, 'months', true);
 };
