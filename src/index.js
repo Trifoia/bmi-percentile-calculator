@@ -113,7 +113,7 @@ const generateBmiMetric = (kgs, meters, sex, agem, optionalBMIData) => {
 
   // bmi
   const bmi =  calculateBmi(kgs, meters);
-  calcBmiObj.bmi = Math.round( bmi * 10 ) / 10;
+  calcBmiObj.bmi = Math.round( bmi * 100 ) / 100;
 
   // Get the correct item from the bmi data
   const bmiDataItem = bmiData.find((item) => {

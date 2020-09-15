@@ -24,15 +24,15 @@ describe('bmi-percentile-calculator', function() {
 
   it('should generate correct BMI values', async () => {
     const check = (actual, expected) => {
-      assert.equal(actual.bmi, expected.bmi);
-      assert.equal(actual.percentile, expected.percentile);
-      assert.equal(actual.overP95, expected.overP95);
-      assert.equal(actual.M.toFixed(3), expected.M.toFixed(3));
-      assert.equal(actual.Z.toFixed(3), expected.Z.toFixed(3));
+      assert.strictEqual(actual.bmi, expected.bmi);
+      assert.strictEqual(actual.percentile, expected.percentile);
+      assert.strictEqual(actual.overP95, expected.overP95);
+      assert.strictEqual(actual.M.toFixed(3), expected.M.toFixed(3));
+      assert.strictEqual(actual.Z.toFixed(3), expected.Z.toFixed(3));
     };
     let actual = calculator.english(14, 24, 'f', 45, bmiData);
     check(actual, {
-      bmi: 17.1,
+      bmi: 17.09,
       percentile: 87.9,
       overP95: 0,
       M: 15.37335154,
@@ -42,7 +42,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(20, 24, 'f', 90, bmiData);
     check(actual, {
-      bmi: 24.4,
+      bmi: 24.41,
       percentile: 98.9,
       overP95: 121,
       M: 15.6251988,
@@ -52,7 +52,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(40, 40, 'f', 180, bmiData);
     check(actual, {
-      bmi: 17.6,
+      bmi: 17.58,
       percentile: 17.1,
       overP95: 0,
       M: 19.9305662,
@@ -62,7 +62,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(36, 43, 'f', 90, bmiData);
     check(actual, {
-      bmi: 13.7,
+      bmi: 13.69,
       percentile: 7.6,
       overP95: 0,
       M: 15.6251988,
@@ -72,7 +72,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(14, 24, 'm', 45, bmiData);
     check(actual, {
-      bmi: 17.1,
+      bmi: 17.09,
       percentile: 86.6,
       overP95: 0,
       M: 15.70613566,
@@ -82,7 +82,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(20, 24, 'm', 90, bmiData);
     check(actual, {
-      bmi: 24.4,
+      bmi: 24.41,
       percentile: 99.2,
       overP95: 125,
       M: 15.63170735,
@@ -92,7 +92,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(20, 24, 'm', 90.2, bmiData);
     check(actual, {
-      bmi: 24.4,
+      bmi: 24.41,
       percentile: 99.2,
       overP95: 125,
       M: 15.63170735,
@@ -102,7 +102,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(40, 40, 'm', 180, bmiData);
     check(actual, {
-      bmi: 17.6,
+      bmi: 17.58,
       percentile: 15.1,
       overP95: 0,
       M: 19.85766121,
@@ -112,7 +112,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(36, 43, 'm', 90, bmiData);
     check(actual, {
-      bmi: 13.7,
+      bmi: 13.69,
       percentile: 4.3,
       overP95: 0,
       M: 15.63170735,
@@ -122,7 +122,7 @@ describe('bmi-percentile-calculator', function() {
 
     actual = calculator.english(160, 64, 'm', 300, bmiData);
     check(actual, {
-      bmi: 27.5,
+      bmi: 27.46,
       percentile: 0,
       overP95: 0,
       M: 0,
