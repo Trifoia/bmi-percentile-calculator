@@ -1,6 +1,6 @@
 {
   "name": "@trifoia/bmi-percentile-calculator",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "BMI Percentile Calculator",
   "main": "src/index.js",
   "scripts": {
@@ -25,13 +25,13 @@
   },
   "homepage": "https://github.com/Trifoia/bmi-percentile-calculator#readme",
   "devDependencies": {
-    "eslint": "^7.6.0",
+    "eslint": "^7.9.0",
     "http-server": "^0.12.3",
-    "mocha": "^8.1.1",
+    "mocha": "^8.1.3",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
-    "dayjs": "^1.8.33"
+    "dayjs": "^1.8.35"
   }
 }
